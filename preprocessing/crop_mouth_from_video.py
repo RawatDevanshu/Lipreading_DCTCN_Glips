@@ -10,7 +10,7 @@ def load_args(default_config=None):
     # -- utils
     parser.add_argument('--video-direc', default=None, help='raw video directory')
     parser.add_argument('--landmark-direc', default=None, help='landmark directory')
-    parser.add_argument('--filename-path', default='./lrw500_detected_face.csv', help='list of detected video and its subject ID')
+    parser.add_argument('--filename-path', default='./glips_dataset_paths.csv', help='list of detected video and its subject ID')
     parser.add_argument('--save-direc', default=None, help='the directory of saving mouth ROIs')
     # -- convert to gray scale
     parser.add_argument('--convert-gray', default=False, action='store_true', help='convert2grayscale')

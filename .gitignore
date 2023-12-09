@@ -7,5 +7,7 @@ __pycache__/
 *.tar
 *.pth
 datasets/outputs
+datasets
 .DS_Store
 landmarks
+.venv
