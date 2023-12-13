@@ -31,12 +31,12 @@ from lipreading.dataloaders import get_data_loaders, get_preprocessing_pipelines
 def load_args(default_config=None):
     parser = argparse.ArgumentParser(description='Pytorch Lipreading ')
     # -- dataset config
-    parser.add_argument('--dataset', default='lrw', help='dataset selection')
+    parser.add_argument('--dataset', default='Glips', help='dataset selection')
     parser.add_argument('--num-classes', type=int, default=500, help='Number of classes')
     parser.add_argument('--modality', default='video', choices=['video', 'audio'], help='choose the modality')
     # -- directory
     parser.add_argument('--data-dir', default='./datasets/LRW_h96w96_mouth_crop_gray', help='Loaded data directory')
-    parser.add_argument('--label-path', type=str, default='./labels/500WordsSortedList.txt', help='Path to txt file with labels')
+    parser.add_argument('--label-path', type=str, default='./labels/500WordsSortedList_Glips.txt', help='Path to txt file with labels')
     parser.add_argument('--annonation-direc', default=None, help='Loaded data directory')
     # -- model config
     parser.add_argument('--backbone-type', type=str, default='resnet', choices=['resnet', 'shufflenet'], help='Architecture used for backbone')
@@ -59,7 +59,7 @@ def load_args(default_config=None):
     parser.add_argument('--densetcn-condense', default = False, action='store_true', help='If True, enable condenseTCN')
     # -- train
     parser.add_argument('--training-mode', default='tcn', help='tcn')
-    parser.add_argument('--batch-size', type=int, default=32, help='Mini-batch size')
+    parser.add_argument('--batch-size', type=int, default=16, help='Mini-batch size')
     parser.add_argument('--optimizer',type=str, default='adamw', choices = ['adam','sgd','adamw'])
     parser.add_argument('--lr', default=3e-4, type=float, help='initial learning rate')
     parser.add_argument('--init-epoch', default=0, type=int, help='epoch to start at')

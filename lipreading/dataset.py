@@ -117,13 +117,15 @@ class MyDataset(object):
         # read info txt file (to see duration of word, to be used to do temporal cropping)
         info_txt = os.path.join(self._annonation_direc, *filename.split('/')[self.label_idx:] )  # swap base folder
         info_txt = os.path.splitext( info_txt )[0] + '.txt'   # swap extension
+        # print(info_txt)
         info = read_txt_lines(info_txt)
-
-        utterance_duration = float( info[4].split(' ')[1] )
+        # print(info[3].split(' ')[5])
+        utterance_duration = float( info[3].split(' ')[5] )
         # boundary is used for the features at the top of ResNet, which as a frame rate of 25fps.
         if self.fps == 25:
             half_interval = int( utterance_duration/2.0 * self.fps)
             n_frames = raw_data.shape[0]
+            # print(f"n_frames: {n_frames}")
         elif self.fps == 16000:
             half_interval = int( utterance_duration/2.0 * 25)
             n_frames = raw_data.shape[0] // 640
@@ -148,6 +150,7 @@ class MyDataset(object):
         label = self.list[idx][1]
         if self.use_boundary:
             boundary = self._get_boundary(self.list[idx][0], raw_data)
+            # print(f"boundary: {len(boundary)} filename: {self.list[idx][0].split('/')[-1]}")
             return preprocess_data, label, boundary
         else:
             return preprocess_data, label
@@ -177,7 +180,10 @@ def pad_packed_collate(batch):
     if use_boundary:
         boundaries_np = np.zeros((len(boundaries_tuple), len(boundaries_tuple[0])))
         for idx in range(len(data_np)):
-            boundaries_np[idx] = boundaries_tuple[idx]
+            # print(f"{len(boundaries_np[idx])} {len(boundaries_tuple[idx])}")
+            boundaries_np[idx][:len(boundaries_tuple[idx])] = boundaries_tuple[idx]
+            # recieved error
+            # ValueError: could not broadcast input array from shape (29,) into shape (30,)
         boundaries = torch.FloatTensor(boundaries_np).unsqueeze(-1)
 
     labels = torch.LongTensor(labels_tuple)

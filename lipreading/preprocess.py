@@ -64,6 +64,9 @@ class Normalize(object):
         Returns:
             Tensor: Normalized Tensor image.
         """
+        # if(frames.dtype != "float64"):
+        #     print(frames.dtype)
+        # getting uint8 for some files instead of float64 in glips preprocessed landmarks
         frames = (frames - self.mean) / self.std
         return frames
 

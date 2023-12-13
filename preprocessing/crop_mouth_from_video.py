@@ -29,6 +29,8 @@ modality = "video"
 lines = open(args.filename_path).read().splitlines()
 lines = list(filter(lambda x: 'test' == x.split('/')[-2], lines)) if args.testset_only else lines
 
+totalcount = 0
+count = 0
 for filename_idx, line in enumerate(lines):
 
     filename, person_id = line.split(',')
@@ -50,9 +52,16 @@ for filename_idx, line in enumerate(lines):
         video_filename,
         landmarks_filename,
     )
+    totalcount+= 1
+    if(type(sequence) == list):
+        continue
 
     try:
         if not os.path.exists(dst_filename):
             save2npz(dst_filename, data=sequence)
+            count += 1
+        
     except AssertionError:
         continue
+
+print(f"Total landmarks processed: {totalcount}\n Valid landmarks: {count}\n")

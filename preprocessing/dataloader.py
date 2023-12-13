@@ -62,7 +62,11 @@ class AVSRDataLoader(object):
         # -- Step 3, exclude corner case: 1) no landmark in all frames; 2) number of frames is less than window length.
         if not preprocessed_landmarks or len(preprocessed_landmarks) < self._window_margin: return
         # -- Step 4, affine transformation and crop patch 
-        sequence, transformed_frame, transformed_landmarks = self.crop_patch(video_pathname, preprocessed_landmarks)
+        try:
+            sequence, transformed_frame, transformed_landmarks = self.crop_patch(video_pathname, preprocessed_landmarks)
+        except:
+            print("error from crop patch")
+            sequence = ["error for this file"]
         assert sequence is not None, "cannot crop from {}.".format(filename)
         return sequence
 

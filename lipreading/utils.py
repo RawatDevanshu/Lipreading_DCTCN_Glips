@@ -45,6 +45,8 @@ def read_txt_lines(filepath):
     assert os.path.isfile( filepath ), "Error when trying to read txt file, path does not exist: {}".format(filepath)
     with open( filepath ) as myfile:
         content = myfile.read().splitlines()
+    # print(content)
+    # print("\n-\n-\n-\n-")
     return content
 
 
